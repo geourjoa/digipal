@@ -97,6 +97,14 @@
 - **Risk**: Low
 - **Known issues**: Minor parser inconsistencies fixed in later versions; not a critical CVE risk, but outdated.
 
+### Node.js / npm
+- **Current**: distro-provided `nodejs`/`npm` from `build/Dockerfile` on `ubuntu:18.04` (not pinned)
+- **Short-term target**: pin a supported Node.js LTS compatible with `typescript@2.1.5` and `less`, then validate the build
+- **Long-term target**: modern LTS line after the TypeScript toolchain is upgraded
+- **Effort**: M
+- **Risk**: Medium
+- **Known issues**: Current Node.js comes from the EOL base-image package set, so it is effectively unversioned and tied to old OS repos; this increases build drift and security exposure.
+
 ### TypeScript 2.1.5
 - **Current**: 2.1.5 (released 2016, pinned due to known compilation issue noted in Dockerfile)
 - **Short-term target**: 3.9.x (validate against Text Viewer before upgrading)
