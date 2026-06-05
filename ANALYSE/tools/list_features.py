@@ -32,8 +32,7 @@ def print_header(title):
 
 def list_urls():
     print_header("URL PATTERNS (Endpoints)")
-    resolver = get_resolver()
-    urlconf = get_urlconf()
+    resolver = get_resolver(get_urlconf())
 
     def print_urls(urlpatterns, prefix=""):
         for pattern in urlpatterns:

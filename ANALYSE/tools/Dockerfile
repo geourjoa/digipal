@@ -1,4 +1,11 @@
+# Laucnhed from root folder
+
+# docker build -f ANALYSE/tools/Dockerfile . -t digipal-list-features:test
+# docker run --rm digipal-list-features:test
+
 FROM python:2.7
+
+
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
@@ -6,10 +13,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # Build from repo root context so digipal modules are importable.
+# Example: docker build -f ANALYSE/tools/Dockerfile .
 COPY . /app
 
-# Minimal runtime for list_features.py.py (Django 1.x for Python 2 compatibility).
-RUN pip install --no-cache-dir "Django<2"
+RUN pip install -r ANALYSE/tools/requirements.txt
+
+# Fail fast if the image was built with the wrong context.
+RUN test -f /app/ANALYSE/tools/list_features.py || \
+    (echo "ERROR: build context must be repository root (.)" && exit 1)
 
 # Default command; can be overridden at docker run.
 CMD ["python", "/app/ANALYSE/tools/list_features.py"]
